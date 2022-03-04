@@ -22,8 +22,6 @@ total=modos_transporte["total_value"].sum()
 modos_transporte["porcentaje"]=(modos_transporte["total_value"]/total)*100
 
 
-
-
 #%%%%total de operacioes realizadaspor medio de transporte
 mododetransport=sldb.groupby("transport_mode").count()
 
@@ -41,14 +39,15 @@ imports=sldb[sldb["direction"]=="Imports"]
 export_populares=export.groupby(["origin","destination","transport_mode"]).count()
 
 
-#%%%RUTAS DE EXPORTACION ORDENANDO PRIMEROS 10 POR CONTEO Y PORCENTAJE QUE APORTAN AL INGRESO TOTAL DE OPERACIONES REALIZ
+#%%%RUTAS DE EXPORTACION ORDENADA POR CONTEO Y PORCENTAJE QUE APORTAN AL INGRESO TOTAL DE OPERACIONES REALIZ
+#$$$CORRECTO
 export_populares=export.groupby(["origin","destination","transport_mode"])
 top_rutasex=export_populares.count()["total_value"].sort_values(ascending=False)
 top_rutasex=top_rutasex.reset_index()
 total=top_rutasex["total_value"].sum()
 top_rutasex["porcentaje"]=(top_rutasex["total_value"]/total)*100
 
-#%%%RUTAS DE EXPORTACION ORDENANDO PRIMEROS 10 POR INGRESOS TOTALES Y PORCENTAJE QUE APORTAN AL INGRESO TOTAL
+#%%%RUTAS DE EXPORTACION ORDENANDA POR INGRESOS TOTALES Y PORCENTAJE QUE APORTAN AL INGRESO TOTAL
 export_populares=export.groupby(["origin","destination","transport_mode"])
 top_rutasex=export_populares.sum()["total_value"].sort_values(ascending=False)
 top_rutasex=top_rutasex.reset_index()
@@ -57,17 +56,23 @@ top_rutasex["porcentaje"]=(top_rutasex["total_value"]/total)*100
 
 
 
-#%%%RUTAS DE EXPORTACION ORDENANDO PRIMEROS 10 POR  CONTEO
+#%%%RUTAS DE EXPORTACION ORDENANDO PRIMEROS 10 POR  CONTEO¿¿¿ AQUI SE ACUMULAN 
+# Y CONCENTRAN LOS DATOS EN LOS PRIMEROS 
 export_populares=export.groupby(["origin","destination","transport_mode"])
 top_rutasex=export_populares.count()["total_value"].sort_values(ascending=False).head(10)
 
 
-#%%%RUTAS DE IMPORTACION POR CONTEO
-import_populares=imports.groupby(["origin","destination","transport_mode"]).count()
-
 #%%%RUTAS DE IMPORTACION  ORDENANDO PRIMEROS POR CONTEO Y PORCENTAJE QUE APORTAN  TOTAL DE OPERACIONES REALIZ
 import_populares=imports.groupby(["origin","destination","transport_mode"])
 top_rutasim=import_populares.count()["total_value"].sort_values(ascending=False)
+top_rutasim=top_rutasim.reset_index()
+total=top_rutasim["total_value"].sum()
+top_rutasim["porcentaje"]=(top_rutasim["total_value"]/total)*100
+
+
+#%%%RUTAS DE IMPORTACION ORDENANDO primeros 10 POR INGRESOS TOTALES Y PORCENTAJE QUE APORTA AL TOTAL
+import_populares=imports.groupby(["origin","destination","transport_mode"])
+top_rutasim=import_populares.sum()["total_value"].sort_values(ascending=False).head(10)
 top_rutasim=top_rutasim.reset_index()
 total=top_rutasim["total_value"].sum()
 top_rutasim["porcentaje"]=(top_rutasim["total_value"]/total)*100
