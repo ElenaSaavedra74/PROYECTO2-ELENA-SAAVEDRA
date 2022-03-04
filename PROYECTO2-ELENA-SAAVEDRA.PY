@@ -2,7 +2,6 @@
 
 #%%%%%importando pandas
 import pandas as pd
-#from sqlalchemy import false
 
 #%%%%%
 sldb= pd.read_csv ("synergy_logistics_database.csv")
