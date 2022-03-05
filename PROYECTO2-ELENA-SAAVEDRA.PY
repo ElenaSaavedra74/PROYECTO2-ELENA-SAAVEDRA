@@ -20,6 +20,7 @@ toprutas.head(n=40)
 modos_transporte=sldb.groupby("transport_mode").sum()
 total=modos_transporte["total_value"].sum()
 modos_transporte["porcentaje"]=(modos_transporte["total_value"]/total)*100
+modos_transporte = modos_transporte.drop(columns=['year',"register_id"])
 
 
 #%%%%total de operacioes realizadaspor medio de transporte
@@ -80,10 +81,13 @@ top_rutasim["porcentaje"]=(top_rutasim["total_value"]/total)*100
 
 #%%%RUTAS DE IMPORTACION ORDENANDO POR INGRESOS TOTALES Y PORCENTAJE QUE APORTA AL TOTAL
 import_populares=imports.groupby(["origin","destination","transport_mode"])
-top_rutasim=import_populares.sum()["total_value"].sort_values(ascending=False)
-top_rutasim=top_rutasim.reset_index()
-total=top_rutasim["total_value"].sum()
-top_rutasim["porcentaje"]=(top_rutasim["total_value"]/total)*100
+todas_rutas=import_populares.sum()["total_value"]
+rutas_ordenadas=todas_rutas.sort_values["total_value"]
+top_rutas=rutas_ordenadas.head(10)
+#top_rutasim=import_populares.sum()["total_value"].sort_values(ascending=False)
+#top_rutasim=top_rutasim.reset_index()
+#total=top_rutasim["total_value"].sum()
+#top_rutasim["porcentaje"]=(top_rutasim["total_value"]/total)*100
 
 
 # %%
